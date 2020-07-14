@@ -1,7 +1,6 @@
 package sort
 
 import (
-	"algorithms/ds"
 	"testing"
 )
 
@@ -11,10 +10,8 @@ func BenchmarkInsertion(b *testing.B) {
 	benchmark("Insertion", 1000, Insertion, b)
 }
 
-func TestInsertion1000(t *testing.T) {
-	a := ds.RandomIntegers(1000, 1000)
-	a = Insertion(a)
-	if !Sorted(a) {
-		t.Errorf("Array not sorted: %v", a)
+func TestInsertion(t *testing.T) {
+	for i := 1; i <= 1000; i *= 10 {
+		test("Insertion", i, Insertion, t)
 	}
 }
