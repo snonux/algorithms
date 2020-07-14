@@ -5,8 +5,16 @@ import (
 	"testing"
 )
 
-func BenchmarkSelection1000(b *testing.B) {
+func BenchmarkSelection(b *testing.B) {
+	benchmark("Selection", 10, Selection, b)
+	benchmark("Selection", 100, Selection, b)
+	benchmark("Selection", 1000, Selection, b)
+}
+
+func TestSelection1000(t *testing.T) {
 	a := ds.RandomIntegers(1000, 1000)
-	b.ResetTimer()
-	Selection(a)
+	a = Selection(a)
+	if !Sorted(a) {
+		t.Errorf("Array not sorted: %v", a)
+	}
 }
