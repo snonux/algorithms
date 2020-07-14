@@ -4,6 +4,5 @@ type Comparer interface {
 	LowerThan(a Comparer) bool
 	HigherThan(a Comparer) bool
 	Equals(a Comparer) bool
+	IntVal() int
 }
-
-type CompareList []Comparer

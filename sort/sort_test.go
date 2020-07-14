@@ -8,46 +8,73 @@ import (
 
 // Store results here to avoid compiler optimizations
 var benchResult []ds.Comparer
+var benchResultInt []int
 
 const maxLength int = 10000
 
 type sortAlgorithm func([]ds.Comparer) []ds.Comparer
+type sortAlgorithmInt func([]int) []int
 
-func TestSort(t *testing.T) {
+func TestSelectionSort(t *testing.T) {
 	for i := 1; i <= maxLength; i *= 10 {
-		test("Selection", i, Selection, t)
-		test("Insertion", i, Insertion, t)
+		test(Selection, i, t)
 	}
 }
 
-func BenchmarkSort(b *testing.B) {
+func TestInsertionSort(t *testing.T) {
 	for i := 1; i <= maxLength; i *= 10 {
-		benchmark("Insertion", i, Insertion, b)
-	}
-	for i := 1; i <= maxLength; i *= 10 {
-		benchmark("Selection", i, Selection, b)
+		test(Insertion, i, t)
 	}
 }
 
-func test(name string, length int, sort sortAlgorithm, t *testing.T) {
+func TestShellSort(t *testing.T) {
+	for i := 1; i <= maxLength; i *= 10 {
+		test(Shell, i, t)
+	}
+}
+
+func BenchmarkInsertionSort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Insertion, i, b)
+	}
+}
+
+func BenchmarkSelectionSort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Selection, i, b)
+	}
+}
+
+func BenchmarkShellSort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Shell, i, b)
+	}
+}
+
+func test(sort sortAlgorithm, length int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
-		a := ds.RandomIntegers(length, length)
+		a := makeIntegers(length, length)
 		a = sort(a)
 		if !Sorted(a) {
 			t.Errorf("Array not sorted: %v", a)
 		}
 	}
-	t.Run(fmt.Sprintf("Test%s%d", name, length), cb)
+	t.Run(fmt.Sprintf("%d", length), cb)
 }
 
-func benchmark(name string, length int, sort sortAlgorithm, b *testing.B) {
+func benchmark(sort sortAlgorithm, length int, b *testing.B) {
 	cb := func(b *testing.B) {
-		a := ds.RandomIntegers(length, length)
+		a := makeIntegers(length, length)
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			benchResult = sort(a)
 		}
 	}
-	b.Run(fmt.Sprintf("Benchmark%s%d", name, length), cb)
+	b.Run(fmt.Sprintf("%d", length), cb)
+}
+
+func makeIntegers(length, max int) []ds.Comparer {
+	//return ds.ReverseSortedIntegers(length)
+	return ds.RandomIntegers(length, max)
 }
