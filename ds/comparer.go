@@ -1,8 +1,10 @@
 package ds
 
 type Comparer interface {
-	LowerThan(a Comparer) bool
-	HigherThan(a Comparer) bool
-	Equals(a Comparer) bool
-	IntVal() int
+	Equal(a Comparer) bool
+	Lower(a Comparer) bool
+	LowerEqual(a Comparer) bool
+	Higher(a Comparer) bool
+	HigherEqual(a Comparer) bool
+	Int() int
 }

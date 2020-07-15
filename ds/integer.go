@@ -39,18 +39,26 @@ func (i Integer) String() string {
 	return fmt.Sprintf("%d", i.val)
 }
 
-func (i Integer) IntVal() int {
+func (i Integer) Int() int {
 	return i.val
 }
 
-func (i Integer) LowerThan(j Comparer) bool {
-	return i.val < j.IntVal()
+func (i Integer) Equal(j Comparer) bool {
+	return i.val == j.Int()
 }
 
-func (i Integer) HigherThan(j Comparer) bool {
-	return i.val > j.IntVal()
+func (i Integer) Lower(j Comparer) bool {
+	return i.val < j.Int()
 }
 
-func (i Integer) Equals(j Comparer) bool {
-	return i.val == j.IntVal()
+func (i Integer) LowerEqual(j Comparer) bool {
+	return i.val <= j.Int()
+}
+
+func (i Integer) Higher(j Comparer) bool {
+	return i.val > j.Int()
+}
+
+func (i Integer) HigherEqual(j Comparer) bool {
+	return i.val >= j.Int()
 }

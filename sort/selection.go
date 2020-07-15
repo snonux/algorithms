@@ -9,7 +9,7 @@ func Selection(a []ds.Comparer) []ds.Comparer {
 	for i := 0; i < length; i++ {
 		min := i
 		for j := i + 1; j < length; j++ {
-			if a[min].HigherThan(a[j]) {
+			if a[min].Higher(a[j]) {
 				min = j
 			}
 		}

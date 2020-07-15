@@ -9,7 +9,7 @@ func Insertion(a []ds.Comparer) []ds.Comparer {
 
 	for i := 0; i < length; i++ {
 		for j := i; j > 0; j-- {
-			if a[j].HigherThan(a[j-1]) {
+			if a[j].Higher(a[j-1]) {
 				break
 			}
 			tmp := a[j]
