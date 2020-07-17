@@ -4,7 +4,7 @@ import (
 	"algorithms/ds"
 )
 
-func Selection(a []ds.Comparer) []ds.Comparer {
+func Selection(a ds.ArrayList) ds.ArrayList {
 	length := len(a)
 	for i := 0; i < length; i++ {
 		min := i

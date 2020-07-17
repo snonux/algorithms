@@ -8,7 +8,3 @@ type Comparer interface {
 	HigherEqual(a Comparer) bool
 	Int() int
 }
-
-func (c []Comparer) firstN(n int) []Comparer {
-	return c
-}

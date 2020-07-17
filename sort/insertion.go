@@ -4,7 +4,7 @@ import (
 	"algorithms/ds"
 )
 
-func Insertion(a []ds.Comparer) []ds.Comparer {
+func Insertion(a ds.ArrayList) ds.ArrayList {
 	length := len(a)
 
 	for i := 0; i < length; i++ {

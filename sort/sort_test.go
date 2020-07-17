@@ -7,12 +7,12 @@ import (
 )
 
 // Store results here to avoid compiler optimizations
-var benchResult []ds.Comparer
+var benchResult ds.ArrayList
 var benchResultInt []int
 
 const maxLength int = 10000
 
-type sortAlgorithm func([]ds.Comparer) []ds.Comparer
+type sortAlgorithm func(ds.ArrayList) ds.ArrayList
 type sortAlgorithmInt func([]int) []int
 
 func TestSelectionSort(t *testing.T) {
@@ -62,7 +62,7 @@ func test(sort sortAlgorithm, length int, t *testing.T) {
 		t.Parallel()
 		a := makeIntegers(length, length)
 		a = sort(a)
-		if !Sorted(a) {
+		if !a.Sorted() {
 			t.Errorf("Array not sorted: %v", a)
 		}
 	}
@@ -73,8 +73,8 @@ func testShuffle(sort sortAlgorithm, length int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
 		a := sort(ds.SortedIntegers(length))
-		if Sorted(a) {
-			t.Errorf("Array sorted: %v", a)
+		if a.Sorted() {
+			t.Errorf("Array sorted: %v", a.FirstN(10))
 		}
 	}
 	t.Run(fmt.Sprintf("%d", length), cb)
@@ -91,7 +91,7 @@ func benchmark(sort sortAlgorithm, length int, b *testing.B) {
 	b.Run(fmt.Sprintf("%d", length), cb)
 }
 
-func makeIntegers(length, max int) []ds.Comparer {
+func makeIntegers(length, max int) ds.ArrayList {
 	//return ds.ReverseSortedIntegers(length)
 	return ds.RandomIntegers(length, max)
 }
