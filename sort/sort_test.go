@@ -34,7 +34,7 @@ func TestShellSort(t *testing.T) {
 }
 
 func TestShuffleSort(t *testing.T) {
-	for i := 1; i <= maxLength; i *= 10 {
+	for i := 10; i <= maxLength; i *= 10 {
 		testShuffle(Shuffle, i, t)
 	}
 }
@@ -54,6 +54,12 @@ func BenchmarkSelectionSort(b *testing.B) {
 func BenchmarkShellSort(b *testing.B) {
 	for i := 1; i <= maxLength; i *= 10 {
 		benchmark(Shell, i, b)
+	}
+}
+
+func BenchmarkShuffleSort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Shuffle, i, b)
 	}
 }
 
@@ -92,6 +98,5 @@ func benchmark(sort sortAlgorithm, length int, b *testing.B) {
 }
 
 func makeIntegers(length, max int) ds.ArrayList {
-	//return ds.ReverseSortedIntegers(length)
 	return ds.RandomIntegers(length, max)
 }

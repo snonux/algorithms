@@ -9,24 +9,24 @@ type Integer struct {
 	val int
 }
 
-func RandomIntegers(length, max int) []Comparer {
-	a := make([]Comparer, length)
+func RandomIntegers(length, max int) ArrayList {
+	a := make(ArrayList, length)
 	for i := 0; i < length; i++ {
 		a[i] = Integer{rand.Intn(max)}
 	}
 	return a
 }
 
-func SortedIntegers(length int) []Comparer {
-	a := make([]Comparer, length)
+func SortedIntegers(length int) ArrayList {
+	a := make(ArrayList, length)
 	for i := 0; i < length; i++ {
 		a[i] = Integer{i}
 	}
 	return a
 }
 
-func ReverseSortedIntegers(length int) []Comparer {
-	a := make([]Comparer, length)
+func ReverseSortedIntegers(length int) ArrayList {
+	a := make(ArrayList, length)
 	j := length
 	for i := 0; i < length; i++ {
 		a[i] = Integer{j}
