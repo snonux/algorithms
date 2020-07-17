@@ -43,22 +43,22 @@ func (i Integer) Int() int {
 	return i.val
 }
 
-func (i Integer) Equal(j Comparer) bool {
+func (i Integer) Equal(j Elem) bool {
 	return i.val == j.Int()
 }
 
-func (i Integer) Lower(j Comparer) bool {
+func (i Integer) Lower(j Elem) bool {
 	return i.val < j.Int()
 }
 
-func (i Integer) LowerEqual(j Comparer) bool {
+func (i Integer) LowerEqual(j Elem) bool {
 	return i.val <= j.Int()
 }
 
-func (i Integer) Higher(j Comparer) bool {
+func (i Integer) Higher(j Elem) bool {
 	return i.val > j.Int()
 }
 
-func (i Integer) HigherEqual(j Comparer) bool {
+func (i Integer) HigherEqual(j Elem) bool {
 	return i.val >= j.Int()
 }

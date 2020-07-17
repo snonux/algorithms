@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type ArrayList []Comparer
+type ArrayList []Elem
 
 func (a ArrayList) FirstN(n int) string {
 	var sb strings.Builder
