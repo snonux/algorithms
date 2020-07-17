@@ -33,6 +33,12 @@ func TestShellSort(t *testing.T) {
 	}
 }
 
+func TestShuffleSort(t *testing.T) {
+	for i := 1; i <= maxLength; i *= 10 {
+		testShuffle(Shuffle, i, t)
+	}
+}
+
 func BenchmarkInsertionSort(b *testing.B) {
 	for i := 1; i <= maxLength; i *= 10 {
 		benchmark(Insertion, i, b)
@@ -58,6 +64,17 @@ func test(sort sortAlgorithm, length int, t *testing.T) {
 		a = sort(a)
 		if !Sorted(a) {
 			t.Errorf("Array not sorted: %v", a)
+		}
+	}
+	t.Run(fmt.Sprintf("%d", length), cb)
+}
+
+func testShuffle(sort sortAlgorithm, length int, t *testing.T) {
+	cb := func(t *testing.T) {
+		t.Parallel()
+		a := sort(ds.SortedIntegers(length))
+		if Sorted(a) {
+			t.Errorf("Array sorted: %v", a)
 		}
 	}
 	t.Run(fmt.Sprintf("%d", length), cb)
