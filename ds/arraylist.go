@@ -35,3 +35,9 @@ func (a ArrayList) Sorted() bool {
 	}
 	return true
 }
+
+func (a ArrayList) SwapPos(i, j int) {
+	tmp := a[i]
+	a[i] = a[j]
+	a[j] = tmp
+}

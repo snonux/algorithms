@@ -6,7 +6,7 @@ import (
 )
 
 type Integer struct {
-	val int
+	Val int
 }
 
 func RandomIntegers(length, max int) ArrayList {
@@ -36,29 +36,29 @@ func ReverseSortedIntegers(length int) ArrayList {
 }
 
 func (i Integer) String() string {
-	return fmt.Sprintf("%d", i.val)
+	return fmt.Sprintf("%d", i.Val)
 }
 
 func (i Integer) Int() int {
-	return i.val
+	return i.Val
 }
 
 func (i Integer) Equal(j Elem) bool {
-	return i.val == j.Int()
+	return i.Val == j.Int()
 }
 
 func (i Integer) Lower(j Elem) bool {
-	return i.val < j.Int()
+	return i.Val < j.Int()
 }
 
 func (i Integer) LowerEqual(j Elem) bool {
-	return i.val <= j.Int()
+	return i.Val <= j.Int()
 }
 
 func (i Integer) Higher(j Elem) bool {
-	return i.val > j.Int()
+	return i.Val > j.Int()
 }
 
 func (i Integer) HigherEqual(j Elem) bool {
-	return i.val >= j.Int()
+	return i.Val >= j.Int()
 }

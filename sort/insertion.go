@@ -12,9 +12,7 @@ func Insertion(a ds.ArrayList) ds.ArrayList {
 			if a[j].Higher(a[j-1]) {
 				break
 			}
-			tmp := a[j]
-			a[j] = a[j-1]
-			a[j-1] = tmp
+			a.SwapPos(j, j-1)
 		}
 	}
 
