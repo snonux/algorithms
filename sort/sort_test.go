@@ -37,6 +37,23 @@ func TestMergeSort(t *testing.T) {
 	for i := 1; i <= maxLength; i *= 10 {
 		test(Merge, i, t)
 	}
+	test(Merge, maxLength*2, t)
+}
+
+func TestMerge2Sort(t *testing.T) {
+	t.Log("Parallel merge sort")
+	for i := 1; i <= maxLength; i *= 10 {
+		test(Merge2, i, t)
+	}
+	test(Merge2, maxLength*2, t)
+}
+
+func TestMerge3Sort(t *testing.T) {
+	t.Log("Bottom-up merge sort")
+	for i := 1; i <= maxLength; i *= 10 {
+		test(Merge3, i, t)
+	}
+	test(Merge3, maxLength*2, t)
 }
 
 func TestShuffleSort(t *testing.T) {
@@ -66,6 +83,18 @@ func BenchmarkShellSort(b *testing.B) {
 func BenchmarkMergeSort(b *testing.B) {
 	for i := 1; i <= maxLength; i *= 10 {
 		benchmark(Merge, i, b)
+	}
+}
+
+func BenchmarkMerge2Sort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Merge2, i, b)
+	}
+}
+
+func BenchmarkMerge3Sort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Merge3, i, b)
 	}
 }
 
