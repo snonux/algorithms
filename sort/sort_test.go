@@ -33,6 +33,12 @@ func TestShellSort(t *testing.T) {
 	}
 }
 
+func TestQuickSort(t *testing.T) {
+	for i := 1; i <= maxLength; i *= 10 {
+		test(Quick, i, t)
+	}
+}
+
 func TestShuffleSort(t *testing.T) {
 	for i := 10; i <= maxLength; i *= 10 {
 		testShuffle(Shuffle, i, t)
@@ -54,6 +60,12 @@ func BenchmarkSelectionSort(b *testing.B) {
 func BenchmarkShellSort(b *testing.B) {
 	for i := 1; i <= maxLength; i *= 10 {
 		benchmark(Shell, i, b)
+	}
+}
+
+func BenchmarkQuickSort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Quick, i, b)
 	}
 }
 
