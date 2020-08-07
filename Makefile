@@ -5,7 +5,7 @@ run:
 test:
 	go test ./... -v
 bench:
-	go test -run=10 -bench=. ./... -v
+	go test -run=xxx -bench=. ./... -v
 profile:
-	go test -bench=QuickSort ./sort -memprofile memprofile.out -cpuprofile profile.out
-	go tool pprof profile.out
+	go test -run=xxx -bench=Quick2Sort ./sort -memprofile memprofile.out -cpuprofile cpuprofile.out
+	go tool pprof cpuprofile.out

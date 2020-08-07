@@ -62,3 +62,26 @@ func (i Integer) Higher(j Elem) bool {
 func (i Integer) HigherEqual(j Elem) bool {
 	return i.Val >= j.Int()
 }
+
+func (i Integer) Compare(j Elem) int {
+    jVal := j.Int()
+    switch {
+      case i.Val < jVal:
+      return -1
+      case i.Val > jVal:
+      return 1
+    }
+	return 0
+}
+
+func (i Integer) CompareCB(j Elem, lowerCB, higherCB, equalsCB func()) {
+    jVal := j.Int()
+    switch {
+      case i.Val < jVal:
+        lowerCB()
+      case i.Val > jVal:
+        higherCB()
+      default:
+        equalsCB()
+    }
+}

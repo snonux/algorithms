@@ -62,6 +62,12 @@ func TestQuickSort(t *testing.T) {
 	}
 }
 
+func TestQuick2Sort(t *testing.T) {
+	for i := 1; i <= maxLength; i *= 10 {
+		test(Quick2, i, t)
+	}
+}
+
 func TestShuffleSort(t *testing.T) {
 	for i := 10; i <= maxLength; i *= 10 {
 		testShuffle(Shuffle, i, t)
@@ -107,6 +113,12 @@ func BenchmarkMerge3Sort(b *testing.B) {
 func BenchmarkQuickSort(b *testing.B) {
 	for i := 1; i <= maxLength; i *= 10 {
 		benchmark(Quick, i, b)
+	}
+}
+
+func BenchmarkQuick2Sort(b *testing.B) {
+	for i := 1; i <= maxLength; i *= 10 {
+		benchmark(Quick2, i, b)
 	}
 }
 
