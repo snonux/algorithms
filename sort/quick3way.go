@@ -18,13 +18,12 @@ func quick3Way(a ds.ArrayList) {
 		return
 	}
 
-	lt := 0          // Lower than
-	i := 1           // lt..i contain duplicates
+	lt := 0     // Lower than
+	i := 1      // lt..i contain duplicates
 	gt := l - 1 // Greater than
 
-	Insertion(a[0:3])
-	a.Swap(0, 1)
-	v := a[0] // Partitioning item
+	a.Swap(0, median(a, l))
+	v := a[0]
 
 	for i <= gt {
 		switch {
