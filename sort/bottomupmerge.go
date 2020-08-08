@@ -4,8 +4,7 @@ import (
 	"algorithms/ds"
 )
 
-// Merge3 is the bottom up version of merge sort.
-func Merge3(a ds.ArrayList) ds.ArrayList {
+func BottomUpMerge(a ds.ArrayList) ds.ArrayList {
 	length := len(a)
 	aux := make(ds.ArrayList, length)
 

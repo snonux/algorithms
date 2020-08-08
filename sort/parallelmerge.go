@@ -5,15 +5,14 @@ import (
 	"sync"
 )
 
-// Merge2 is a parallelized version of Merge
-func Merge2(a ds.ArrayList) ds.ArrayList {
+func ParallelMerge(a ds.ArrayList) ds.ArrayList {
 	aux := make(ds.ArrayList, len(a))
-	mergeSort2(a, aux, 0, len(a)-1)
+	parallelMerge(a, aux, 0, len(a)-1)
 
 	return a
 }
 
-func mergeSort2(a, aux ds.ArrayList, lo, hi int) {
+func parallelMerge(a, aux ds.ArrayList, lo, hi int) {
 	mid := lo + (hi-lo)/2
 	defer merge(a, aux, lo, mid, hi)
 
@@ -26,11 +25,11 @@ func mergeSort2(a, aux ds.ArrayList, lo, hi int) {
 	var wg sync.WaitGroup
 	wg.Add(2)
 	go func() {
-		mergeSort2(a, aux, lo, mid)
+		parallelMerge(a, aux, lo, mid)
 		wg.Done()
 	}()
 	go func() {
-		mergeSort2(a, aux, mid+1, hi)
+		parallelMerge(a, aux, mid+1, hi)
 		wg.Done()
 	}()
 	wg.Wait()
