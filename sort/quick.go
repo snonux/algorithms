@@ -24,6 +24,7 @@ func quick(a ds.ArrayList) {
 func quickPartition(a ds.ArrayList) int {
 	i := 0      // Left scan index
 	j := len(a) // Right scan index
+	hi := j - 1
 
 	Insertion(a[0:3])
 	a.Swap(0, 1)
@@ -31,9 +32,15 @@ func quickPartition(a ds.ArrayList) int {
 
 	for {
 		for i++; a[i] < v; i++ {
+			if i == hi {
+				break
+			}
 		}
 
 		for j--; v < a[j]; j-- {
+			if j == 0 {
+				break
+			}
 		}
 
 		// Check scan complete
