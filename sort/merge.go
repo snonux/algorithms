@@ -13,7 +13,8 @@ func Merge(a ds.ArrayList) ds.ArrayList {
 
 func mergeSort(a, aux ds.ArrayList) {
 	l := len(a)
-	if l <= 1 {
+	if l <= 10 {
+		Insertion(a)
 		return
 	}
 
