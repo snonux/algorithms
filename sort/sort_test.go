@@ -10,8 +10,9 @@ import (
 var benchResult ds.ArrayList
 var benchResultInt []int
 
-const minLength int = 100
-const maxLength int = 10000
+const minLength int = 1
+const maxLength int = 1000000
+const maxSlowLength int = 100000
 
 var arrayListCache map[string]ds.ArrayList
 
@@ -19,13 +20,13 @@ type sortAlgorithm func(ds.ArrayList) ds.ArrayList
 type sortAlgorithmInt func([]int) []int
 
 func TestSelectionSort(t *testing.T) {
-	for i := minLength; i <= maxLength; i *= 10 {
+	for i := minLength; i <= maxSlowLength; i *= 10 {
 		test(Selection, i, t)
 	}
 }
 
 func TestInsertionSort(t *testing.T) {
-	for i := minLength; i <= maxLength; i *= 10 {
+	for i := minLength; i <= maxSlowLength; i *= 10 {
 		test(Insertion, i, t)
 	}
 }
@@ -82,13 +83,13 @@ func TestShuffleSort(t *testing.T) {
 }
 
 func BenchmarkInsertionSort(b *testing.B) {
-	for i := minLength; i <= maxLength; i *= 10 {
+	for i := minLength; i <= maxSlowLength; i *= 10 {
 		benchmark(Insertion, i, b)
 	}
 }
 
 func BenchmarkSelectionSort(b *testing.B) {
-	for i := minLength; i <= maxLength; i *= 10 {
+	for i := minLength; i <= maxSlowLength; i *= 10 {
 		benchmark(Selection, i, b)
 	}
 }
@@ -204,6 +205,7 @@ func makeRandomIntegers(length, max int) ds.ArrayList {
 		return a
 	}
 	a := ds.RandomIntegers(length, max)
+	a = Shuffle(a)
 	arrayListCache[key] = a
 	return a
 }

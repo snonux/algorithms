@@ -31,13 +31,13 @@ func quickPartition(a ds.ArrayList, lo, hi int) int {
 	v := a[lo] // Partitioning item
 
 	for {
-		for i++; a[i].Lower(v); i++ {
+		for i++; a[i] < v; i++ {
 			if i == hi {
 				break
 			}
 		}
 
-		for j--; v.Lower(a[j]); j-- {
+		for j--; v < a[j]; j-- {
 			if j == lo {
 				break
 			}
