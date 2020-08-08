@@ -20,7 +20,7 @@ func mergeSort(a, aux ds.ArrayList) {
 	mi := length / 2
 	mergeSort(a[0:mi], aux[0:mi])
 	mergeSort(a[mi:], aux[mi:])
-	merge(a, aux, 0, mi-1, length-1)
+	merge(a, aux, 0, mi, length-1)
 }
 
 func merge(a, aux ds.ArrayList, lo, mi, hi int) {
@@ -29,11 +29,11 @@ func merge(a, aux ds.ArrayList, lo, mi, hi int) {
 	}
 
 	i := lo
-	j := mi + 1
+	j := mi
 
 	for k := lo; k <= hi; k++ {
 		switch {
-		case i > mi:
+		case i >= mi:
 			a[k] = aux[j]
 			j++
 		case j > hi:

@@ -10,7 +10,7 @@ func BottomUpMerge(a ds.ArrayList) ds.ArrayList {
 
 	for sz := 1; sz < length; sz = sz + sz {
 		for lo := 0; lo < length-sz; lo += sz + sz {
-			merge(a, aux, lo, lo+sz-1, min(lo+sz+sz-1, length-1))
+			merge(a, aux, lo, lo+sz, min(lo+sz+sz-1, length-1))
 		}
 	}
 

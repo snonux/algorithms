@@ -17,9 +17,7 @@ func Selection(a ds.ArrayList) ds.ArrayList {
 		if min == i {
 			continue
 		}
-		tmp := a[i]
-		a[i] = a[min]
-		a[min] = tmp
+		a.Swap(i, min)
 	}
 
 	return a

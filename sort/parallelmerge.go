@@ -6,31 +6,38 @@ import (
 )
 
 func ParallelMerge(a ds.ArrayList) ds.ArrayList {
-	aux := make(ds.ArrayList, len(a))
-	parallelMerge(a, aux, 0, len(a)-1)
-
+	parallelMerge(a, make(ds.ArrayList, len(a)))
 	return a
 }
 
-func parallelMerge(a, aux ds.ArrayList, lo, hi int) {
-	mid := lo + (hi-lo)/2
-	defer merge(a, aux, lo, mid, hi)
+func parallelMerge(a, aux ds.ArrayList) {
+	length := len(a)
+	if length <= 1 {
+		return
+	}
 
-	if hi-lo <= 1000 {
-		//mergeSort(a, aux, lo, mid)
-		//mergeSort(a, aux, mid+1, hi)
+	mi := length / 2
+	if length < 1000 {
+		mergeSort(a[0:mi], aux[0:mi])
+		mergeSort(a[mi:], aux[mi:])
+		merge(a, aux, 0, mi, length-1)
 		return
 	}
 
 	var wg sync.WaitGroup
 	wg.Add(2)
+
 	go func() {
-		parallelMerge(a, aux, lo, mid)
+		parallelMerge(a[0:mi], aux[0:mi])
 		wg.Done()
 	}()
+
 	go func() {
-		parallelMerge(a, aux, mid+1, hi)
+		parallelMerge(a[mi:], aux[mi:])
 		wg.Done()
 	}()
+
 	wg.Wait()
+	merge(a, aux, 0, mi, length-1)
+	return
 }
