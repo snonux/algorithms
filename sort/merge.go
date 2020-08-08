@@ -12,15 +12,15 @@ func Merge(a ds.ArrayList) ds.ArrayList {
 }
 
 func mergeSort(a, aux ds.ArrayList) {
-	length := len(a)
-	if length <= 1 {
+	l := len(a)
+	if l <= 1 {
 		return
 	}
 
-	mi := length / 2
+	mi := l / 2
 	mergeSort(a[0:mi], aux[0:mi])
 	mergeSort(a[mi:], aux[mi:])
-	merge(a, aux, 0, mi, length-1)
+	merge(a, aux, 0, mi, l-1)
 }
 
 func merge(a, aux ds.ArrayList, lo, mi, hi int) {

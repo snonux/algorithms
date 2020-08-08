@@ -144,48 +144,48 @@ func BenchmarkShuffleSort(b *testing.B) {
 }
 */
 
-func test(sort sortAlgorithm, length int, t *testing.T) {
+func test(sort sortAlgorithm, l int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
-		a := makeRandomIntegers(length, -1)
+		a := makeRandomIntegers(l, -1)
 		a = sort(a)
 		if !a.Sorted() {
 			t.Errorf("Array not sorted: %v", a)
 		}
 	}
-	t.Run(fmt.Sprintf("%d", length), cb)
+	t.Run(fmt.Sprintf("%d", l), cb)
 }
 
-func testShuffle(sort sortAlgorithm, length int, t *testing.T) {
+func testShuffle(sort sortAlgorithm, l int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
-		a := sort(ds.NewAscendingArrayList(length))
+		a := sort(ds.NewAscendingArrayList(l))
 		if a.Sorted() {
 			t.Errorf("Array sorted: %v", a.FirstN(10))
 		}
 	}
-	t.Run(fmt.Sprintf("%d", length), cb)
+	t.Run(fmt.Sprintf("%d", l), cb)
 }
 
-func benchmark(sort sortAlgorithm, length int, b *testing.B) {
-	a := makeRandomIntegers(length, -1)
-	b.Run(fmt.Sprintf("random(%d)", length), func(b *testing.B) {
+func benchmark(sort sortAlgorithm, l int, b *testing.B) {
+	a := makeRandomIntegers(l, -1)
+	b.Run(fmt.Sprintf("random(%d)", l), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			benchResult = sort(a)
 		}
 	})
 
-	a = ds.NewAscendingArrayList(length)
-	b.Run(fmt.Sprintf("ascending(%d)", length), func(b *testing.B) {
+	a = ds.NewAscendingArrayList(l)
+	b.Run(fmt.Sprintf("ascending(%d)", l), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			benchResult = sort(a)
 		}
 	})
 
-	a = ds.NewDescendingArrayList(length)
-	b.Run(fmt.Sprintf("descending(%d)", length), func(b *testing.B) {
+	a = ds.NewDescendingArrayList(l)
+	b.Run(fmt.Sprintf("descending(%d)", l), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			benchResult = sort(a)
@@ -193,18 +193,18 @@ func benchmark(sort sortAlgorithm, length int, b *testing.B) {
 	})
 }
 
-func makeRandomIntegers(length, max int) ds.ArrayList {
+func makeRandomIntegers(l, max int) ds.ArrayList {
 	// Use a cache to make sure that all all sorting algos use the same
 	// random sequences.
 	if arrayListCache == nil {
 		arrayListCache = make(map[string]ds.ArrayList)
 	}
 
-	key := fmt.Sprintf("random(%d, %d)", length, max)
+	key := fmt.Sprintf("random(%d, %d)", l, max)
 	if a, ok := arrayListCache[key]; ok {
 		return a
 	}
-	a := ds.NewRandomArrayList(length, max)
+	a := ds.NewRandomArrayList(l, max)
 	arrayListCache[key] = a
 	return a
 }

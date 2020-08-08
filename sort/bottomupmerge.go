@@ -5,12 +5,12 @@ import (
 )
 
 func BottomUpMerge(a ds.ArrayList) ds.ArrayList {
-	length := len(a)
-	aux := make(ds.ArrayList, length)
+	l := len(a)
+	aux := make(ds.ArrayList, l)
 
-	for sz := 1; sz < length; sz = sz + sz {
-		for lo := 0; lo < length-sz; lo += sz + sz {
-			merge(a, aux, lo, lo+sz, min(lo+sz+sz-1, length-1))
+	for sz := 1; sz < l; sz = sz + sz {
+		for lo := 0; lo < l-sz; lo += sz + sz {
+			merge(a, aux, lo, lo+sz, min(lo+sz+sz-1, l-1))
 		}
 	}
 

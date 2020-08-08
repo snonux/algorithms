@@ -6,10 +6,10 @@ import (
 )
 
 func Shuffle(a ds.ArrayList) ds.ArrayList {
-	length := len(a)
+	l := len(a)
 
-	for i := 0; i < length; i++ {
-		r := length - rand.Intn(length-i) - 1
+	for i := 0; i < l; i++ {
+		r := l - rand.Intn(l-i) - 1
 		a.Swap(i, r)
 	}
 

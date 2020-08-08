@@ -12,15 +12,15 @@ func ParallelQuick(a ds.ArrayList) ds.ArrayList {
 }
 
 func parallelQuick(a ds.ArrayList) {
-	length := len(a)
-	if length <= 10 {
+	l := len(a)
+	if l <= 10 {
 		Insertion(a)
 		return
 	}
 
 	j := quickPartition(a)
 
-	if length >= 1000 {
+	if l >= 1000 {
 		var wg sync.WaitGroup
 		wg.Add(2)
 		defer wg.Wait()

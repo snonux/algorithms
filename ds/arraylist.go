@@ -8,9 +8,9 @@ import (
 
 type ArrayList []int
 
-func NewRandomArrayList(length, max int) ArrayList {
-	a := make(ArrayList, length)
-	for i := 0; i < length; i++ {
+func NewRandomArrayList(l, max int) ArrayList {
+	a := make(ArrayList, l)
+	for i := 0; i < l; i++ {
 		if max > 0 {
 			a[i] = rand.Intn(max)
 			continue
@@ -20,18 +20,18 @@ func NewRandomArrayList(length, max int) ArrayList {
 	return a
 }
 
-func NewAscendingArrayList(length int) ArrayList {
-	a := make(ArrayList, length)
-	for i := 0; i < length; i++ {
+func NewAscendingArrayList(l int) ArrayList {
+	a := make(ArrayList, l)
+	for i := 0; i < l; i++ {
 		a[i] = i
 	}
 	return a
 }
 
-func NewDescendingArrayList(length int) ArrayList {
-	a := make(ArrayList, length)
-	j := length - 1
-	for i := 0; i < length; i++ {
+func NewDescendingArrayList(l int) ArrayList {
+	a := make(ArrayList, l)
+	j := l - 1
+	for i := 0; i < l; i++ {
 		a[i] = j
 		j--
 	}
@@ -42,16 +42,16 @@ func (a ArrayList) FirstN(n int) string {
 	var sb strings.Builder
 	j := n
 
-	length := len(a)
-	if j > length {
-		j = length
+	l := len(a)
+	if j > l {
+		j = l
 	}
 
 	for i := 0; i < j; i++ {
 		fmt.Fprintf(&sb, "%v ", a[i])
 	}
 
-	if j < length {
+	if j < l {
 		fmt.Fprintf(&sb, "... ")
 	}
 
@@ -68,7 +68,7 @@ func (a ArrayList) Sorted() bool {
 }
 
 func (a ArrayList) Swap(i, j int) {
-	tmp := a[i]
+	aux := a[i]
 	a[i] = a[j]
-	a[j] = tmp
+	a[j] = aux
 }

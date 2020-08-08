@@ -11,16 +11,16 @@ func ParallelMerge(a ds.ArrayList) ds.ArrayList {
 }
 
 func parallelMerge(a, aux ds.ArrayList) {
-	length := len(a)
-	if length <= 1 {
+	l := len(a)
+	if l <= 1 {
 		return
 	}
 
-	mi := length / 2
-	if length < 1000 {
+	mi := l / 2
+	if l < 1000 {
 		mergeSort(a[0:mi], aux[0:mi])
 		mergeSort(a[mi:], aux[mi:])
-		merge(a, aux, 0, mi, length-1)
+		merge(a, aux, 0, mi, l-1)
 		return
 	}
 
@@ -38,6 +38,6 @@ func parallelMerge(a, aux ds.ArrayList) {
 	}()
 
 	wg.Wait()
-	merge(a, aux, 0, mi, length-1)
+	merge(a, aux, 0, mi, l-1)
 	return
 }

@@ -12,15 +12,15 @@ func Quick3Way(a ds.ArrayList) ds.ArrayList {
 }
 
 func quick3Way(a ds.ArrayList) {
-	length := len(a)
-	if length <= 10 {
+	l := len(a)
+	if l <= 10 {
 		Insertion(a)
 		return
 	}
 
 	lt := 0          // Lower than
 	i := 1           // lt..i contain duplicates
-	gt := length - 1 // Greater than
+	gt := l - 1 // Greater than
 
 	Insertion(a[0:3])
 	a.Swap(0, 1)
