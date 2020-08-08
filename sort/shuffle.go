@@ -10,9 +10,7 @@ func Shuffle(a ds.ArrayList) ds.ArrayList {
 
 	for i := 0; i < length; i++ {
 		r := length - rand.Intn(length-i) - 1
-		tmp := a[i]
-		a[i] = a[r]
-		a[r] = tmp
+		a.Swap(i, r)
 	}
 
 	return a

@@ -17,12 +17,10 @@ func Shell(a ds.ArrayList) ds.ArrayList {
 	for h >= 1 {
 		for i := h; i < length; i++ {
 			for j := i; j >= h; j -= h {
-				if a[j-h].Lower(a[j]) {
+				if a[j-h] < a[j] {
 					break
 				}
-				tmp := a[j]
-				a[j] = a[j-h]
-				a[j-h] = tmp
+				a.Swap(j, j-h)
 			}
 		}
 

@@ -26,12 +26,12 @@ func quick3Way(a ds.ArrayList, lo, hi int) {
 	v := a[lo] // Partitioning item
 
 	for i <= gt {
-		switch a[i].Compare(v) {
-		case -1:
+		switch {
+		case a[i] < v:
 			a.Swap(lt, i)
 			lt++
 			i++
-		case 1:
+		case a[i] > v:
 			a.Swap(i, gt)
 			gt--
 		default:

@@ -38,7 +38,7 @@ func merge(a, aux ds.ArrayList, lo, mid, hi int) {
 		case j > hi:
 			a[k] = aux[i]
 			i++
-		case aux[i].Higher(aux[j]):
+		case aux[i] > aux[j]:
 			a[k] = aux[j]
 			j++
 		default:

@@ -11,7 +11,7 @@ var benchResult ds.ArrayList
 var benchResultInt []int
 
 const minLength int = 1
-const maxLength int = 1000000
+const maxLength int = 100000
 const maxSlowLength int = 100000
 
 var arrayListCache map[string]ds.ArrayList
@@ -159,7 +159,7 @@ func test(sort sortAlgorithm, length int, t *testing.T) {
 func testShuffle(sort sortAlgorithm, length int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
-		a := sort(ds.AscendingIntegers(length))
+		a := sort(ds.NewAscendingArrayList(length))
 		if a.Sorted() {
 			t.Errorf("Array sorted: %v", a.FirstN(10))
 		}
@@ -176,7 +176,7 @@ func benchmark(sort sortAlgorithm, length int, b *testing.B) {
 		}
 	})
 
-	a = ds.AscendingIntegers(length)
+	a = ds.NewAscendingArrayList(length)
 	b.Run(fmt.Sprintf("ascending(%d)", length), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
@@ -184,7 +184,7 @@ func benchmark(sort sortAlgorithm, length int, b *testing.B) {
 		}
 	})
 
-	a = ds.DescendingIntegers(length)
+	a = ds.NewDescendingArrayList(length)
 	b.Run(fmt.Sprintf("descending(%d)", length), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
@@ -204,8 +204,7 @@ func makeRandomIntegers(length, max int) ds.ArrayList {
 	if a, ok := arrayListCache[key]; ok {
 		return a
 	}
-	a := ds.RandomIntegers(length, max)
-	a = Shuffle(a)
+	a := ds.NewRandomArrayList(length, max)
 	arrayListCache[key] = a
 	return a
 }

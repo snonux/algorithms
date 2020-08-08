@@ -10,7 +10,7 @@ func Selection(a ds.ArrayList) ds.ArrayList {
 	for i := 0; i < length; i++ {
 		min := i
 		for j := i + 1; j < length; j++ {
-			if a[min].Higher(a[j]) {
+			if a[min] > a[j] {
 				min = j
 			}
 		}

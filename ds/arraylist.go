@@ -2,10 +2,41 @@ package ds
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 )
 
-type ArrayList []Integer
+type ArrayList []int
+
+func NewRandomArrayList(length, max int) ArrayList {
+	a := make(ArrayList, length)
+	for i := 0; i < length; i++ {
+		if max > 0 {
+			a[i] = rand.Intn(max)
+			continue
+		}
+		a[i] = rand.Int()
+	}
+	return a
+}
+
+func NewAscendingArrayList(length int) ArrayList {
+	a := make(ArrayList, length)
+	for i := 0; i < length; i++ {
+		a[i] = i
+	}
+	return a
+}
+
+func NewDescendingArrayList(length int) ArrayList {
+	a := make(ArrayList, length)
+	j := length - 1
+	for i := 0; i < length; i++ {
+		a[i] = j
+		j--
+	}
+	return a
+}
 
 func (a ArrayList) FirstN(n int) string {
 	var sb strings.Builder
@@ -29,7 +60,7 @@ func (a ArrayList) FirstN(n int) string {
 
 func (a ArrayList) Sorted() bool {
 	for i := len(a) - 1; i > 0; i-- {
-		if a[i].Lower(a[i-1]) {
+		if a[i] < a[i-1] {
 			return false
 		}
 	}
