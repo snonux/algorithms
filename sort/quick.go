@@ -26,21 +26,17 @@ func quickPartition(a ds.ArrayList) int {
 	j := len(a) // Right scan index
 	hi := j - 1
 
+	// Median of first 3 elems is partitioning item
+	// This works because we randomly shuffled a in the beginning
 	Insertion(a[0:3])
 	a.Swap(0, 1)
 	v := a[0] // Partitioning item
 
 	for {
-		for i++; a[i] < v; i++ {
-			if i == hi {
-				break
-			}
+		for i++; a[i] < v && i < hi; i++ {
 		}
 
-		for j--; v < a[j]; j-- {
-			if j == 0 {
-				break
-			}
+		for j--; v < a[j] && j > 0; j-- {
 		}
 
 		// Check scan complete

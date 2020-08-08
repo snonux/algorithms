@@ -8,7 +8,6 @@ import (
 
 // Store results here to avoid compiler optimizations
 var benchResult ds.ArrayList
-var benchResultInt []int
 
 const minLength int = 1
 const maxLength int = 10000
@@ -147,7 +146,7 @@ func BenchmarkShuffleSort(b *testing.B) {
 func test(sort sortAlgorithm, l int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
-		a := makeRandomIntegers(l, -1)
+		a := ds.NewRandomArrayList(l, -1)
 		a = sort(a)
 		if !a.Sorted() {
 			t.Errorf("Array not sorted: %v", a)
@@ -168,11 +167,14 @@ func testShuffle(sort sortAlgorithm, l int, t *testing.T) {
 }
 
 func benchmark(sort sortAlgorithm, l int, b *testing.B) {
-	a := makeRandomIntegers(l, -1)
+	a := ds.NewRandomArrayList(l, -1)
+	aux := ds.NewArrayList(l)
+
 	b.Run(fmt.Sprintf("random(%d)", l), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			benchResult = sort(a)
+			copy(aux, a)
+			benchResult = sort(aux)
 		}
 	})
 
@@ -180,7 +182,8 @@ func benchmark(sort sortAlgorithm, l int, b *testing.B) {
 	b.Run(fmt.Sprintf("ascending(%d)", l), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			benchResult = sort(a)
+			copy(aux, a)
+			benchResult = sort(aux)
 		}
 	})
 
@@ -188,23 +191,8 @@ func benchmark(sort sortAlgorithm, l int, b *testing.B) {
 	b.Run(fmt.Sprintf("descending(%d)", l), func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			benchResult = sort(a)
+			copy(aux, a)
+			benchResult = sort(aux)
 		}
 	})
-}
-
-func makeRandomIntegers(l, max int) ds.ArrayList {
-	// Use a cache to make sure that all all sorting algos use the same
-	// random sequences.
-	if arrayListCache == nil {
-		arrayListCache = make(map[string]ds.ArrayList)
-	}
-
-	key := fmt.Sprintf("random(%d, %d)", l, max)
-	if a, ok := arrayListCache[key]; ok {
-		return a
-	}
-	a := ds.NewRandomArrayList(l, max)
-	arrayListCache[key] = a
-	return a
 }

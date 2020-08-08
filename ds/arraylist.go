@@ -8,6 +8,10 @@ import (
 
 type ArrayList []int
 
+func NewArrayList(l int) ArrayList {
+	return make(ArrayList, l)
+}
+
 func NewRandomArrayList(l, max int) ArrayList {
 	a := make(ArrayList, l)
 	for i := 0; i < l; i++ {
