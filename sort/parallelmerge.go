@@ -17,8 +17,8 @@ func parallelMerge(a, aux ds.ArrayList, lo, hi int) {
 	defer merge(a, aux, lo, mid, hi)
 
 	if hi-lo <= 1000 {
-		mergeSort(a, aux, lo, mid)
-		mergeSort(a, aux, mid+1, hi)
+		//mergeSort(a, aux, lo, mid)
+		//mergeSort(a, aux, mid+1, hi)
 		return
 	}
 
