@@ -7,34 +7,35 @@ import (
 
 func ParallelQuick(a ds.ArrayList) ds.ArrayList {
 	Shuffle(a)
-	parallelQuick(a, 0, len(a)-1)
+	parallelQuick(a)
 	return a
 }
 
-func parallelQuick(a ds.ArrayList, lo, hi int) {
-	if hi <= lo+10 {
-		insertion(a, lo, hi)
+func parallelQuick(a ds.ArrayList) {
+	length := len(a)
+	if length <= 10 {
+		Insertion(a)
 		return
 	}
 
-	j := quickPartition(a, lo, hi)
+	j := quickPartition(a)
 
-	if hi <= lo+1000 {
+	if length >= 1000 {
 		var wg sync.WaitGroup
 		wg.Add(2)
 		defer wg.Wait()
 
 		go func() {
-			parallelQuick(a, lo, j-1)
+			parallelQuick(a[0:j])
 			wg.Done()
 		}()
 		go func() {
-			parallelQuick(a, j+1, hi)
+			parallelQuick(a[j+1:])
 			wg.Done()
 		}()
 		return
 	}
 
-	parallelQuick(a, lo, j-1)
-	parallelQuick(a, j+1, hi)
+	parallelQuick(a[0:j])
+	parallelQuick(a[j+1:])
 }

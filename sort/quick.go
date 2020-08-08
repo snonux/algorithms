@@ -6,41 +6,34 @@ import (
 
 func Quick(a ds.ArrayList) ds.ArrayList {
 	Shuffle(a)
-	quick(a, 0, len(a)-1)
+	quick(a)
 	return a
 }
 
-func quick(a ds.ArrayList, lo, hi int) {
-	if hi <= lo+10 {
-		insertion(a, lo, hi)
+func quick(a ds.ArrayList) {
+	if len(a) <= 10 {
+		Insertion(a)
 		return
 	}
 
-	j := quickPartition(a, lo, hi)
-
-	quick(a, lo, j-1)
-	quick(a, j+1, hi)
+	j := quickPartition(a)
+	quick(a[0:j])
+	quick(a[j+1:])
 }
 
-func quickPartition(a ds.ArrayList, lo, hi int) int {
-	i := lo     // Left scan index
-	j := hi + 1 // Right scan index
+func quickPartition(a ds.ArrayList) int {
+	i := 0      // Left scan index
+	j := len(a) // Right scan index
 
-	insertion(a, lo, lo+2)
-	a.Swap(lo, lo+1)
-	v := a[lo] // Partitioning item
+	Insertion(a[0:3])
+	a.Swap(0, 1)
+	v := a[0] // Partitioning item
 
 	for {
 		for i++; a[i] < v; i++ {
-			if i == hi {
-				break
-			}
 		}
 
 		for j--; v < a[j]; j-- {
-			if j == lo {
-				break
-			}
 		}
 
 		// Check scan complete
@@ -52,7 +45,7 @@ func quickPartition(a ds.ArrayList, lo, hi int) int {
 	}
 
 	// Put partitioning item v into a[j]
-	a.Swap(lo, j)
+	a.Swap(0, j)
 
 	// whith a[lo..j-1 <= a[j] <= a[j+1..hi]
 	return j

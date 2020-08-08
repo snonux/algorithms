@@ -7,23 +7,24 @@ import (
 // Quick3Way uses a 3-way partitioning so it is more efficient dealing with duplicates
 func Quick3Way(a ds.ArrayList) ds.ArrayList {
 	Shuffle(a)
-	quick3Way(a, 0, len(a)-1)
+	quick3Way(a)
 	return a
 }
 
-func quick3Way(a ds.ArrayList, lo, hi int) {
-	if hi <= lo+10 {
-		insertion(a, lo, hi)
+func quick3Way(a ds.ArrayList) {
+	length := len(a)
+	if length <= 10 {
+		Insertion(a)
 		return
 	}
 
-	lt := lo    // Lower than
-	i := lo + 1 // lt..i contain duplicates
-	gt := hi    // Greater than
+	lt := 0          // Lower than
+	i := 1           // lt..i contain duplicates
+	gt := length - 1 // Greater than
 
-	insertion(a, lo, lo+2)
-	a.Swap(lo, lo+1)
-	v := a[lo] // Partitioning item
+	Insertion(a[0:3])
+	a.Swap(0, 1)
+	v := a[0] // Partitioning item
 
 	for i <= gt {
 		switch {
@@ -41,6 +42,6 @@ func quick3Way(a ds.ArrayList, lo, hi int) {
 	}
 	// Now a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi]
 
-	quick3Way(a, lo, lt-1)
-	quick3Way(a, gt+1, hi)
+	quick3Way(a[0:lt])
+	quick3Way(a[gt+1:])
 }

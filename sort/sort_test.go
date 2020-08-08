@@ -11,8 +11,8 @@ var benchResult ds.ArrayList
 var benchResultInt []int
 
 const minLength int = 1
-const maxLength int = 100000
-const maxSlowLength int = 100000
+const maxLength int = 1000
+const maxSlowLength int = 1000
 
 var arrayListCache map[string]ds.ArrayList
 

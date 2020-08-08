@@ -5,12 +5,7 @@ import (
 )
 
 func Insertion(a ds.ArrayList) ds.ArrayList {
-	insertion(a, 0, len(a)-1)
-	return a
-}
-
-func insertion(a ds.ArrayList, lo, hi int) {
-	for i := lo; i <= hi; i++ {
+	for i, _ := range a {
 		for j := i; j > 0; j-- {
 			if a[j] > a[j-1] {
 				break
@@ -18,4 +13,6 @@ func insertion(a ds.ArrayList, lo, hi int) {
 			a.Swap(j, j-1)
 		}
 	}
+
+	return a
 }
