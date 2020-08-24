@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Idea: Once Go got generics use generics here instead of hard coded int type
 type ArrayList []int
 
 func NewArrayList(l int) ArrayList {
