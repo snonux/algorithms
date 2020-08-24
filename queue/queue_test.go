@@ -20,6 +20,13 @@ func TestElementaryPriority(t *testing.T) {
 	}
 }
 
+func TestHeapPriority(t *testing.T) {
+	q := NewHeapPriority(1)
+	for i := minLength; i <= maxLength; i *= factor {
+		test(q, i, t)
+	}
+}
+
 func test(q PriorityQueue, l int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
@@ -47,6 +54,13 @@ func test(q PriorityQueue, l int, t *testing.T) {
 
 func BenchmarkElementaryPriority(b *testing.B) {
 	q := NewElementaryPriority(1)
+	for i := minLength; i <= maxLength; i *= factor {
+		benchmark(q, i, b)
+	}
+}
+
+func BenchmarkHeapPriority(b *testing.B) {
+	q := NewHeapPriority(1)
 	for i := minLength; i <= maxLength; i *= factor {
 		benchmark(q, i, b)
 	}
