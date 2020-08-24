@@ -7,8 +7,8 @@ import (
 )
 
 const minLength int = 1
-const maxLength int = 1000
-const factor int = 10
+const maxLength int = 10000
+const factor int = 100
 
 func TestElementaryPQ(t *testing.T) {
 	q := NewElementaryPQ(1)
@@ -39,4 +39,37 @@ func test(q PQ, l int, t *testing.T) {
 		}
 	}
 	t.Run(fmt.Sprintf("%d", l), cb)
+}
+
+func BenchmarkElementaryPQ(b *testing.B) {
+	q := NewElementaryPQ(1)
+	for i := minLength; i <= maxLength; i *= factor {
+		benchmark(q, i, b)
+	}
+}
+
+func benchmark(q PQ, l int, b *testing.B) {
+	r := ds.NewRandomArrayList(l, -1)
+	aux := ds.NewArrayList(l)
+
+	b.Run(fmt.Sprintf("randomInsert(%d)", l), func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			q.Clear()
+			for _, a := range r {
+				q.Insert(a)
+			}
+		}
+	})
+
+	b.Run(fmt.Sprintf("randomInsertAndDeleteMax(%d)", l), func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			q.Clear()
+			for _, a := range r {
+				q.Insert(a)
+			}
+			for i := 0; !q.Empty(); i++ {
+				aux[i] = q.DeleteMax()
+			}
+		}
+	})
 }

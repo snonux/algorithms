@@ -5,10 +5,12 @@ import "algorithms/ds"
 type ElementaryPQ struct {
 	a    ds.ArrayList
 	size int
+	// Initial capacity
+	capacity int
 }
 
 func NewElementaryPQ(capacity int) ElementaryPQ {
-	return ElementaryPQ{make(ds.ArrayList, 0, capacity), 0}
+	return ElementaryPQ{make(ds.ArrayList, 0, capacity), 0, capacity}
 }
 
 func (q ElementaryPQ) Insert(a int) {
@@ -41,6 +43,11 @@ func (q ElementaryPQ) Empty() bool {
 
 func (q ElementaryPQ) Size() int {
 	return q.size
+}
+
+func (q ElementaryPQ) Clear() {
+	q.size = 0
+	q.a = make(ds.ArrayList, 0, q.capacity)
 }
 
 func (q ElementaryPQ) max() (ind, max int) {

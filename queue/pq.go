@@ -6,4 +6,5 @@ type PQ interface {
 	DeleteMax() int
 	Empty() bool
 	Size() int
+	Clear()
 }
