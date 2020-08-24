@@ -1,21 +1,21 @@
 package queue
 
-import "algorithms/ds"
+import (
+	"algorithms/ds"
+)
 
 type ElementaryPriority struct {
-	a    ds.ArrayList
-	size int
+	a ds.ArrayList
 	// Initial capacity
 	capacity int
 }
 
 func NewElementaryPriority(capacity int) *ElementaryPriority {
-	return &ElementaryPriority{make(ds.ArrayList, 0, capacity), 0, capacity}
+	return &ElementaryPriority{make(ds.ArrayList, 0, capacity), capacity}
 }
 
 func (q *ElementaryPriority) Insert(a int) {
 	q.a = append(q.a, a)
-	q.size++
 }
 
 func (q *ElementaryPriority) Max() (max int) {
@@ -32,7 +32,7 @@ func (q *ElementaryPriority) DeleteMax() int {
 	for i := ind + 1; i < q.Size(); i++ {
 		q.a[i-1] = q.a[i]
 	}
-	q.size--
+	q.a = q.a[0 : len(q.a)-1]
 
 	return max
 }
@@ -42,11 +42,10 @@ func (q *ElementaryPriority) Empty() bool {
 }
 
 func (q *ElementaryPriority) Size() int {
-	return q.size
+	return len(q.a)
 }
 
 func (q *ElementaryPriority) Clear() {
-	q.size = 0
 	q.a = make(ds.ArrayList, 0, q.capacity)
 }
 

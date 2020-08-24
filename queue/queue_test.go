@@ -7,8 +7,8 @@ import (
 )
 
 const minLength int = 1
-const maxLength int = 10000
-const factor int = 100
+const maxLength int = 10
+const factor int = 10
 
 // Store results here to avoid compiler optimizations
 var benchResult ds.ArrayList
