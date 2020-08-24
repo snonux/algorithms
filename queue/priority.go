@@ -1,6 +1,6 @@
 package queue
 
-type PQ interface {
+type PriorityQueue interface {
 	Insert(a int)
 	Max() (max int)
 	DeleteMax() int

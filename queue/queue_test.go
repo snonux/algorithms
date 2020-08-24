@@ -13,14 +13,14 @@ const factor int = 100
 // Store results here to avoid compiler optimizations
 var benchResult ds.ArrayList
 
-func TestElementaryPQ(t *testing.T) {
-	q := NewElementaryPQ(1)
+func TestElementaryPriority(t *testing.T) {
+	q := NewElementaryPriority(1)
 	for i := minLength; i <= maxLength; i *= factor {
 		test(q, i, t)
 	}
 }
 
-func test(q PQ, l int, t *testing.T) {
+func test(q PriorityQueue, l int, t *testing.T) {
 	cb := func(t *testing.T) {
 		t.Parallel()
 		for _, a := range ds.NewRandomArrayList(l, -1) {
@@ -45,14 +45,14 @@ func test(q PQ, l int, t *testing.T) {
 	t.Run(fmt.Sprintf("%d", l), cb)
 }
 
-func BenchmarkElementaryPQ(b *testing.B) {
-	q := NewElementaryPQ(1)
+func BenchmarkElementaryPriority(b *testing.B) {
+	q := NewElementaryPriority(1)
 	for i := minLength; i <= maxLength; i *= factor {
 		benchmark(q, i, b)
 	}
 }
 
-func benchmark(q PQ, l int, b *testing.B) {
+func benchmark(q PriorityQueue, l int, b *testing.B) {
 	benchResult = ds.NewRandomArrayList(l, -1)
 
 	b.Run(fmt.Sprintf("randomInsert(%d)", l), func(b *testing.B) {

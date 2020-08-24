@@ -2,28 +2,28 @@ package queue
 
 import "algorithms/ds"
 
-type ElementaryPQ struct {
+type ElementaryPriority struct {
 	a    ds.ArrayList
 	size int
 	// Initial capacity
 	capacity int
 }
 
-func NewElementaryPQ(capacity int) *ElementaryPQ {
-	return &ElementaryPQ{make(ds.ArrayList, 0, capacity), 0, capacity}
+func NewElementaryPriority(capacity int) *ElementaryPriority {
+	return &ElementaryPriority{make(ds.ArrayList, 0, capacity), 0, capacity}
 }
 
-func (q *ElementaryPQ) Insert(a int) {
+func (q *ElementaryPriority) Insert(a int) {
 	q.a = append(q.a, a)
 	q.size++
 }
 
-func (q *ElementaryPQ) Max() (max int) {
+func (q *ElementaryPriority) Max() (max int) {
 	_, max = q.max()
 	return
 }
 
-func (q *ElementaryPQ) DeleteMax() int {
+func (q *ElementaryPriority) DeleteMax() int {
 	if q.Empty() {
 		return 0
 	}
@@ -37,20 +37,20 @@ func (q *ElementaryPQ) DeleteMax() int {
 	return max
 }
 
-func (q *ElementaryPQ) Empty() bool {
+func (q *ElementaryPriority) Empty() bool {
 	return q.Size() == 0
 }
 
-func (q *ElementaryPQ) Size() int {
+func (q *ElementaryPriority) Size() int {
 	return q.size
 }
 
-func (q *ElementaryPQ) Clear() {
+func (q *ElementaryPriority) Clear() {
 	q.size = 0
 	q.a = make(ds.ArrayList, 0, q.capacity)
 }
 
-func (q *ElementaryPQ) max() (ind, max int) {
+func (q *ElementaryPriority) max() (ind, max int) {
 	for i, a := range q.a {
 		if a > max {
 			ind, max = i, a
