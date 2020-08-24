@@ -9,21 +9,21 @@ type ElementaryPQ struct {
 	capacity int
 }
 
-func NewElementaryPQ(capacity int) ElementaryPQ {
-	return ElementaryPQ{make(ds.ArrayList, 0, capacity), 0, capacity}
+func NewElementaryPQ(capacity int) *ElementaryPQ {
+	return &ElementaryPQ{make(ds.ArrayList, 0, capacity), 0, capacity}
 }
 
-func (q ElementaryPQ) Insert(a int) {
+func (q *ElementaryPQ) Insert(a int) {
 	q.a = append(q.a, a)
 	q.size++
 }
 
-func (q ElementaryPQ) Max() (max int) {
+func (q *ElementaryPQ) Max() (max int) {
 	_, max = q.max()
 	return
 }
 
-func (q ElementaryPQ) DeleteMax() int {
+func (q *ElementaryPQ) DeleteMax() int {
 	if q.Empty() {
 		return 0
 	}
@@ -37,20 +37,20 @@ func (q ElementaryPQ) DeleteMax() int {
 	return max
 }
 
-func (q ElementaryPQ) Empty() bool {
+func (q *ElementaryPQ) Empty() bool {
 	return q.Size() == 0
 }
 
-func (q ElementaryPQ) Size() int {
+func (q *ElementaryPQ) Size() int {
 	return q.size
 }
 
-func (q ElementaryPQ) Clear() {
+func (q *ElementaryPQ) Clear() {
 	q.size = 0
 	q.a = make(ds.ArrayList, 0, q.capacity)
 }
 
-func (q ElementaryPQ) max() (ind, max int) {
+func (q *ElementaryPQ) max() (ind, max int) {
 	for i, a := range q.a {
 		if a > max {
 			ind, max = i, a

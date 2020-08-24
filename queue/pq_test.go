@@ -10,6 +10,9 @@ const minLength int = 1
 const maxLength int = 10000
 const factor int = 100
 
+// Store results here to avoid compiler optimizations
+var benchResult ds.ArrayList
+
 func TestElementaryPQ(t *testing.T) {
 	q := NewElementaryPQ(1)
 	for i := minLength; i <= maxLength; i *= factor {
@@ -24,10 +27,11 @@ func test(q PQ, l int, t *testing.T) {
 			q.Insert(a)
 		}
 		prev, started := 0, false
+		t.Log("Size", q.Size(), q.Empty())
 		for !q.Empty() {
 			next := q.DeleteMax()
 			if started {
-				if next < prev {
+				if next > prev {
 					t.Errorf("Expected element '%v' to be lower than previous '%v': %v",
 						next, prev, q)
 				}
@@ -49,13 +53,12 @@ func BenchmarkElementaryPQ(b *testing.B) {
 }
 
 func benchmark(q PQ, l int, b *testing.B) {
-	r := ds.NewRandomArrayList(l, -1)
-	aux := ds.NewArrayList(l)
+	benchResult = ds.NewRandomArrayList(l, -1)
 
 	b.Run(fmt.Sprintf("randomInsert(%d)", l), func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			q.Clear()
-			for _, a := range r {
+			for _, a := range benchResult {
 				q.Insert(a)
 			}
 		}
@@ -64,11 +67,11 @@ func benchmark(q PQ, l int, b *testing.B) {
 	b.Run(fmt.Sprintf("randomInsertAndDeleteMax(%d)", l), func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			q.Clear()
-			for _, a := range r {
+			for _, a := range benchResult {
 				q.Insert(a)
 			}
 			for i := 0; !q.Empty(); i++ {
-				aux[i] = q.DeleteMax()
+				benchResult[i] = q.DeleteMax()
 			}
 		}
 	})
