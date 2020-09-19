@@ -23,3 +23,9 @@ For unit tests run:
 For running benchmars run:
 
 ``make bench``
+
+# TODO:
+
+* HeapSort
+* ElementarySet (linked list)
+* Set with sorted linked list + Bianry Search

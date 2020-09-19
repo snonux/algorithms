@@ -29,7 +29,6 @@ func TestHeapPriority(t *testing.T) {
 
 func test(q PriorityQueue, l int, t *testing.T) {
 	cb := func(t *testing.T) {
-		t.Parallel()
 		for _, a := range ds.NewRandomArrayList(l, -1) {
 			q.Insert(a)
 		}
