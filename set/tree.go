@@ -66,7 +66,16 @@ func (t *Tree) Get(key int) (int, error) {
 	return t.get(t.root, key)
 }
 
-/*
-	Get(key int) (int, error)
-	Del(key int) (int, error)
-*/
+func (t *Tree) Del(key int) (int, error) {
+	if t.root == nil {
+		return 0, NotFound
+	}
+
+	if t.root.key == key {
+		val := t.root.val
+
+		return val, nil
+	}
+
+	return 0, NotImplemented
+}
