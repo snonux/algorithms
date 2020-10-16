@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"algorithms/ds"
+	"github.com/snonux/algorithms/ds"
 )
 
 func BottomUpMerge(a ds.ArrayList) ds.ArrayList {

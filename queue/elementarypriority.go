@@ -1,7 +1,7 @@
 package queue
 
 import (
-	"algorithms/ds"
+	"github.com/snonux/algorithms/ds"
 )
 
 type ElementaryPriority struct {

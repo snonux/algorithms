@@ -1,9 +1,10 @@
 package queue
 
 import (
-	"algorithms/ds"
 	"fmt"
 	"testing"
+
+	"github.com/snonux/algorithms/ds"
 )
 
 const minLength int = 1

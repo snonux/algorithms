@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"algorithms/ds"
+	"github.com/snonux/algorithms/ds"
 )
 
 func Insertion(a ds.ArrayList) ds.ArrayList {

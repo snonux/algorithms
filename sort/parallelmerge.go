@@ -1,8 +1,9 @@
 package sort
 
 import (
-	"algorithms/ds"
 	"sync"
+
+	"github.com/snonux/algorithms/ds"
 )
 
 func ParallelMerge(a ds.ArrayList) ds.ArrayList {

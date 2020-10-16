@@ -1,9 +1,10 @@
 package sort
 
 import (
-	"algorithms/ds"
 	"fmt"
 	"testing"
+
+	"github.com/snonux/algorithms/ds"
 )
 
 // Store results here to avoid compiler optimizations

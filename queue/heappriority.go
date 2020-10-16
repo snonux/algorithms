@@ -1,7 +1,7 @@
 package queue
 
 import (
-	"algorithms/ds"
+	"github.com/snonux/algorithms/ds"
 )
 
 type HeapPriority struct {
@@ -9,11 +9,11 @@ type HeapPriority struct {
 }
 
 func NewHeapPriority(capacity int) *HeapPriority {
-    q := HeapPriority{
+	q := HeapPriority{
 		ElementaryPriority: ElementaryPriority{make(ds.ArrayList, 0, capacity), capacity},
 	}
 
-    // Index 0 unused
+	// Index 0 unused
 	q.a = append(q.a, 0)
 	return &q
 }
@@ -23,12 +23,12 @@ func (q *HeapPriority) Empty() bool {
 }
 
 func (q *HeapPriority) Size() int {
-	return len(q.a)-1
+	return len(q.a) - 1
 }
 
 func (q *HeapPriority) Insert(a int) {
 	q.a = append(q.a, a)
-	q.swim(len(q.a)-1)
+	q.swim(len(q.a) - 1)
 }
 
 func (q *HeapPriority) Max() (max int) {
@@ -50,7 +50,7 @@ func (q *HeapPriority) DeleteMax() int {
 	default:
 		a := q.a[1]
 		// Last index
-        max := len(q.a)-1
+		max := len(q.a) - 1
 
 		q.a.Swap(1, max)
 		q.a = q.a[0:max]
@@ -63,13 +63,13 @@ func (q *HeapPriority) DeleteMax() int {
 func (q *HeapPriority) swim(k int) {
 	for k > 1 && q.a[k/2] < q.a[k] {
 		q.a.Swap(k/2, k)
-		k = k/2
+		k = k / 2
 	}
 }
 
 func (q *HeapPriority) sink(k int) {
 	// Last index
-	max := len(q.a)-1
+	max := len(q.a) - 1
 
 	for 2*k <= max {
 		// Left child
@@ -77,7 +77,7 @@ func (q *HeapPriority) sink(k int) {
 
 		// Go to right child?
 		if j < max && q.a[j] < q.a[j+1] {
-		    j++
+			j++
 		}
 
 		// Found my spot in the heap

@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"algorithms/ds"
+	"github.com/snonux/algorithms/ds"
 )
 
 // Quick3Way uses a 3-way partitioning so it is more efficient dealing with duplicates

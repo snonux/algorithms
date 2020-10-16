@@ -1,8 +1,9 @@
 package sort
 
 import (
-	"algorithms/ds"
 	"math/rand"
+
+	"github.com/snonux/algorithms/ds"
 )
 
 func Quick(a ds.ArrayList) ds.ArrayList {
