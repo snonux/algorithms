@@ -2,7 +2,7 @@ package set
 
 type ElementaryElem struct {
 	key  int
-	val  interface{}
+	val  int
 	next *ElementaryElem
 }
 
@@ -14,11 +14,11 @@ func NewElementary() *Elementary {
 	return &Elementary{}
 }
 
-func (s Elementary) Empty() bool {
+func (s *Elementary) Empty() bool {
 	return s.root == nil
 }
 
-func (s Elementary) Set(key int, val interface{}) {
+func (s *Elementary) Set(key int, val int) {
 	if s.Empty() {
 		s.root = &ElementaryElem{key, val, nil}
 		return
@@ -39,38 +39,41 @@ func (s Elementary) Set(key int, val interface{}) {
 	}
 }
 
-func (s Elementary) Get(key int) interface{} {
+func (s *Elementary) Get(key int) (int, error) {
 	elem := s.root
 
 	for elem != nil {
 		if elem.key == key {
-			return elem.val
+			return elem.val, nil
 		}
 		elem = elem.next
 	}
 
-	return nil
+	return 0, NotFound
 }
 
-func (s Elementary) Del(key int) interface{} {
+func (s *Elementary) Del(key int) (int, error) {
 	if s.Empty() {
-		return nil
+		return 0, NotFound
 	}
 
 	if s.root.key == key {
-		defer func() { s.root = nil }()
-		return s.root.val
+		defer func() {
+			s.root = s.root.next
+		}()
+		return s.root.val, nil
 	}
 
 	elem := s.root
-
 	for elem.next != nil {
 		if elem.next.key == key {
-			defer func() { elem.next = elem.next.next }()
-			return elem.next.val
+			defer func() {
+				elem.next = elem.next.next
+			}()
+			return elem.next.val, nil
 		}
 		elem = elem.next
 	}
 
-	return nil
+	return 0, NotFound
 }
