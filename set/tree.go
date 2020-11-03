@@ -65,18 +65,23 @@ func (t *Tree) Del(key int) (int, error) {
 		return n.val, nil
 	default:
 		// I have two childs!
+
+		// Right child has no left child
+		if n.right.left == nil {
+			val := n.val
+			n.right.left = n.left
+			*ptr = n.right
+			return val, nil
+		}
+
 		return 0, NotImplemented
 	}
-}
-
-func (t *Tree) min(ptr **node) (**node, *node, error) {
-	return nil, nil, NotImplemented
 }
 
 func (t *Tree) search(ptr **node, key int) (**node, *node, error) {
 	n := *ptr
 	if n == nil {
-		return ptr, nil, NotFound
+		return nil, nil, NotFound
 	}
 
 	switch {
@@ -86,5 +91,35 @@ func (t *Tree) search(ptr **node, key int) (**node, *node, error) {
 		return t.search(&n.right, key)
 	default:
 		return ptr, n, nil
+	}
+}
+
+func (t *Tree) min(ptr **node, key int) (**node, *node, error) {
+	n := *ptr
+	if n == nil {
+		return nil, nil, NotFound
+	}
+
+	for {
+		if n.left == nil {
+			return ptr, n, nil
+		}
+		ptr = &n.left
+		n = n.left
+	}
+}
+
+func (t *Tree) max(ptr **node, key int) (**node, *node, error) {
+	n := *ptr
+	if n == nil {
+		return nil, nil, NotFound
+	}
+
+	for {
+		if n.right == nil {
+			return ptr, n, nil
+		}
+		ptr = &n.right
+		n = n.right
 	}
 }

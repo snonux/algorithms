@@ -3,8 +3,8 @@ package set
 import "fmt"
 
 var (
-	NotFound       = fmt.Errorf("Could not find entry")
-	NotImplemented = fmt.Errorf("Method not implemented")
+	NotFound       = fmt.Errorf("could not find entry")
+	NotImplemented = fmt.Errorf("method not implemented")
 )
 
 type Set interface {
