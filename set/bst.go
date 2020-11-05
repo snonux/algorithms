@@ -7,38 +7,42 @@ type node struct {
 	right *node
 }
 
-type Tree struct {
+type BST struct {
 	root *node
 }
 
-func NewTree() *Tree {
-	return &Tree{}
+func NewBST() *BST {
+	return &BST{}
 }
 
-func (t *Tree) Empty() bool {
+func (t *BST) Empty() bool {
 	return t.root == nil
 }
 
-func (t *Tree) Set(key, val int) {
+func (t *BST) Set(key, val int) {
 	if t.Empty() {
 		t.root = &node{key, val, nil, nil}
 		return
 	}
 	ptr, _, err := t.search(&t.root, key)
-	if err != nil {
-		// key already in the tree as node found
+	switch err {
+	case nil:
+		// key already in the tree
 		return
+	case NotFound:
+		*ptr = &node{key, val, nil, nil}
+		return
+	default:
+		panic(err)
 	}
-
-	*ptr = &node{key, val, nil, nil}
 }
 
-func (t *Tree) Get(key int) (int, error) {
+func (t *BST) Get(key int) (int, error) {
 	_, n, err := t.search(&t.root, key)
 	return n.val, err
 }
 
-func (t *Tree) Del(key int) (int, error) {
+func (t *BST) Del(key int) (int, error) {
 	ptr, n, err := t.search(&t.root, key)
 	if err != nil {
 		return 0, err
@@ -79,10 +83,10 @@ func (t *Tree) Del(key int) (int, error) {
 	}
 }
 
-func (t *Tree) search(ptr **node, key int) (**node, *node, error) {
+func (t *BST) search(ptr **node, key int) (**node, *node, error) {
 	n := *ptr
 	if n == nil {
-		return nil, nil, NotFound
+		return ptr, nil, NotFound
 	}
 
 	switch {
@@ -95,7 +99,7 @@ func (t *Tree) search(ptr **node, key int) (**node, *node, error) {
 	}
 }
 
-func (t *Tree) deleteMin(ptr **node) (*node, error) {
+func (t *BST) deleteMin(ptr **node) (*node, error) {
 	ptr, n, err := t.min(ptr)
 	if err != nil {
 		return nil, err
@@ -106,7 +110,7 @@ func (t *Tree) deleteMin(ptr **node) (*node, error) {
 	return n, nil
 }
 
-func (t *Tree) min(ptr **node) (**node, *node, error) {
+func (t *BST) min(ptr **node) (**node, *node, error) {
 	n := *ptr
 	if n == nil {
 		return nil, nil, NotFound
@@ -121,7 +125,8 @@ func (t *Tree) min(ptr **node) (**node, *node, error) {
 	}
 }
 
-func (t *Tree) max(ptr **node) (**node, *node, error) {
+/*
+func (t *BST) max(ptr **node) (**node, *node, error) {
 	n := *ptr
 	if n == nil {
 		return nil, nil, NotFound
@@ -135,3 +140,4 @@ func (t *Tree) max(ptr **node) (**node, *node, error) {
 		n = *ptr
 	}
 }
+*/
