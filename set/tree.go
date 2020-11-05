@@ -41,7 +41,7 @@ func (t *Tree) Get(key int) (int, error) {
 func (t *Tree) Del(key int) (int, error) {
 	ptr, n, err := t.search(&t.root, key)
 	if err != nil {
-		return n.val, err
+		return 0, err
 	}
 
 	// Case 1: n is leaf node
@@ -64,17 +64,18 @@ func (t *Tree) Del(key int) (int, error) {
 		*ptr = n.left
 		return n.val, nil
 	default:
-		// I have two childs!
+		// I have two children!
 
-		// Right child has no left child
-		if n.right.left == nil {
-			val := n.val
-			n.right.left = n.left
-			*ptr = n.right
-			return val, nil
+		o, err := t.deleteMin(&n.right)
+		if err != nil {
+			return 0, err
 		}
 
-		return 0, NotImplemented
+		o.left = n.left
+		o.right = n.right
+		*ptr = o
+
+		return n.val, nil
 	}
 }
 
@@ -94,7 +95,18 @@ func (t *Tree) search(ptr **node, key int) (**node, *node, error) {
 	}
 }
 
-func (t *Tree) min(ptr **node, key int) (**node, *node, error) {
+func (t *Tree) deleteMin(ptr **node) (*node, error) {
+	ptr, n, err := t.min(ptr)
+	if err != nil {
+		return nil, err
+	}
+
+	*ptr = n.right
+	n.right = nil
+	return n, nil
+}
+
+func (t *Tree) min(ptr **node) (**node, *node, error) {
 	n := *ptr
 	if n == nil {
 		return nil, nil, NotFound
@@ -105,11 +117,11 @@ func (t *Tree) min(ptr **node, key int) (**node, *node, error) {
 			return ptr, n, nil
 		}
 		ptr = &n.left
-		n = n.left
+		n = *ptr
 	}
 }
 
-func (t *Tree) max(ptr **node, key int) (**node, *node, error) {
+func (t *Tree) max(ptr **node) (**node, *node, error) {
 	n := *ptr
 	if n == nil {
 		return nil, nil, NotFound
@@ -120,6 +132,6 @@ func (t *Tree) max(ptr **node, key int) (**node, *node, error) {
 			return ptr, n, nil
 		}
 		ptr = &n.right
-		n = n.right
+		n = *ptr
 	}
 }
