@@ -1,10 +1,27 @@
 package set
 
+import "fmt"
+
 type node struct {
 	key   int
 	val   int
 	left  *node
 	right *node
+}
+
+func (n *node) String() string {
+	recurse := func(n *node) string {
+		if n == nil {
+			return ""
+		}
+		return n.String()
+	}
+
+	return fmt.Sprintf("node{%d:%d,%s,%s}",
+		n.key,
+		n.val,
+		recurse(n.left),
+		recurse(n.right))
 }
 
 type BST struct {
@@ -13,6 +30,14 @@ type BST struct {
 
 func NewBST() *BST {
 	return &BST{}
+}
+
+func (t *BST) String() string {
+	if t.Empty() {
+		return "BST{}"
+	}
+
+	return fmt.Sprintf("BST{%s}", t.root)
 }
 
 func (t *BST) Empty() bool {
@@ -39,7 +64,10 @@ func (t *BST) Set(key, val int) {
 
 func (t *BST) Get(key int) (int, error) {
 	_, n, err := t.search(&t.root, key)
-	return n.val, err
+	if err != nil {
+		return 0, err
+	}
+	return n.val, nil
 }
 
 func (t *BST) Del(key int) (int, error) {

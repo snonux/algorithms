@@ -10,15 +10,14 @@ import (
 
 const factor int = 10
 const minLength int = 1
-const maxLength int = 10
+const maxLength int = 10000
 
 // Store results here to avoid compiler optimizations
 var benchResult int
 
 func TestElementary(t *testing.T) {
-	s := NewElementary()
 	for i := minLength; i <= maxLength; i *= factor {
-		test(s, i, t)
+		test(NewElementary(), i, t)
 	}
 }
 
@@ -28,41 +27,71 @@ func TestBST(t *testing.T) {
 	}
 }
 
+func test(s Set, l int, t *testing.T) {
+	keys := ds.NewRandomArrayList(l, l)
+	randoms := ds.NewRandomArrayList(l, -1)
+	mapping := make(map[int]int, l)
+
+	get := func(key int, del bool) int {
+		var val int
+		var err error
+		switch {
+		case del:
+			defer delete(mapping, key)
+			val, err = s.Del(key)
+			//t.Log("Del", key, val, err)
+		default:
+			val, err = s.Get(key)
+			//t.Log("Get", key, val, err)
+		}
+
+		if mVal, ok := mapping[key]; ok {
+			if err != nil {
+				t.Error("Could not get element", key, val, mVal, err)
+			}
+			if mVal != val {
+				t.Error("Got wrong value for element", key, val, mVal)
+			}
+			return val
+		}
+
+		if err == nil {
+			t.Error("Got element but expected not to", key, val)
+		}
+		return val
+	}
+	testGet := func(key int) int { return get(key, false) }
+	testDel := func(key int) int { return get(key, true) }
+
+	testSet := func(key, val int) {
+		s.Set(key, val)
+		mapping[key] = val
+		//t.Log("Set", key, val)
+		testGet(key)
+	}
+
+	t.Log("Set random key-values", l)
+	var prevKey int
+	for _, key := range sort.Shuffle(keys) {
+		testSet(key, randoms[key])
+		testGet(prevKey)
+		prevKey = key
+	}
+	t.Log("Del random key-values", l)
+	for _, key := range sort.Shuffle(keys) {
+		testDel(key)
+		testGet(prevKey)
+		prevKey = key
+	}
+	if !s.Empty() {
+		t.Error("Expected set to be empty", l)
+	}
+}
+
 func TestBalancedBST(t *testing.T) {
 	for i := minLength; i <= maxLength; i *= factor {
 		test(NewBalancedBST(), i, t)
 	}
-}
-
-func test(s Set, l int, t *testing.T) {
-	cb := func(t *testing.T) {
-		vals := ds.NewRandomArrayList(l, -1)
-		keys := ds.NewRandomArrayList(l, -1)
-		mapping := make(map[int]int, l)
-
-		for i, key := range keys {
-			val := vals[i]
-			mapping[key] = val
-
-			t.Log("Inserting", key, val)
-			s.Set(key, val)
-		}
-
-		for _, key := range sort.Shuffle(keys) {
-			val, err := s.Get(key)
-			if err != nil {
-				t.Errorf("Element %v->%v: %v\n", key, val, err)
-			}
-
-			val2 := mapping[key]
-			if val2 != val {
-				t.Errorf("Element is %v->%v but expected %v\n", key, val, val2)
-			}
-			t.Log("Got", key, val, s)
-		}
-	}
-
-	t.Run(fmt.Sprintf("%d", l), cb)
 }
 
 func BenchmarkElementary(t *testing.B) {
