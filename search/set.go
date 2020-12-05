@@ -1,4 +1,4 @@
-package set
+package search
 
 import "fmt"
 
@@ -7,9 +7,9 @@ var (
 	NotImplemented = fmt.Errorf("method not implemented")
 )
 
-type Set interface {
+type Put interface {
 	Empty() bool
-	Set(key int, val int)
+	Put(key int, val int)
 	Get(key int) (int, error)
 	Del(key int) (int, error)
 }

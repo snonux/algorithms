@@ -1,4 +1,4 @@
-package set
+package search
 
 import "fmt"
 
@@ -44,7 +44,7 @@ func (t *BST) Empty() bool {
 	return t.root == nil
 }
 
-func (t *BST) Set(key, val int) {
+func (t *BST) Put(key, val int) {
 	if t.Empty() {
 		t.root = &node{key, val, nil, nil}
 		return

@@ -1,4 +1,4 @@
-package set
+package search
 
 import (
 	"fmt"
@@ -27,7 +27,7 @@ func TestBST(t *testing.T) {
 	}
 }
 
-func test(s Set, l int, t *testing.T) {
+func test(s Put, l int, t *testing.T) {
 	keys := ds.NewRandomArrayList(l, l)
 	randoms := ds.NewRandomArrayList(l, -1)
 	mapping := make(map[int]int, l)
@@ -63,17 +63,17 @@ func test(s Set, l int, t *testing.T) {
 	testGet := func(key int) int { return get(key, false) }
 	testDel := func(key int) int { return get(key, true) }
 
-	testSet := func(key, val int) {
-		s.Set(key, val)
+	testPut := func(key, val int) {
+		s.Put(key, val)
 		mapping[key] = val
-		//t.Log("Set", key, val)
+		//t.Log("Put", key, val)
 		testGet(key)
 	}
 
-	t.Log("Set random key-values", l)
+	t.Log("Put random key-values", l)
 	var prevKey int
 	for _, key := range sort.Shuffle(keys) {
-		testSet(key, randoms[key])
+		testPut(key, randoms[key])
 		testGet(prevKey)
 		prevKey = key
 	}
@@ -88,9 +88,9 @@ func test(s Set, l int, t *testing.T) {
 	}
 }
 
-func TestBalancedBST(t *testing.T) {
+func TestRedBlackBST(t *testing.T) {
 	for i := minLength; i <= maxLength; i *= factor {
-		test(NewBalancedBST(), i, t)
+		test(NewRedBlackBST(), i, t)
 	}
 }
 
@@ -108,20 +108,20 @@ func BenchmarkBST(t *testing.B) {
 	}
 }
 
-func BenchmarkBalancedBST(t *testing.B) {
-	s := NewBalancedBST()
+func BenchmarkRedBlackBST(t *testing.B) {
+	s := NewRedBlackBST()
 	for i := minLength; i <= maxLength; i *= factor {
 		benchmark(s, i, t)
 	}
 }
 
-func benchmark(s Set, l int, b *testing.B) {
+func benchmark(s Put, l int, b *testing.B) {
 	list := ds.NewRandomArrayList(l, -1)
 
 	b.Run(fmt.Sprintf("random(%d)", l), func(b *testing.B) {
 		b.ResetTimer()
 		for i, a := range list {
-			s.Set(a, i)
+			s.Put(a, i)
 		}
 		for _, a := range list {
 			benchResult, _ = s.Get(a)

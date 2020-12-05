@@ -1,4 +1,4 @@
-package set
+package search
 
 type ElementaryElem struct {
 	key  int
@@ -18,7 +18,7 @@ func (s *Elementary) Empty() bool {
 	return s.root == nil
 }
 
-func (s *Elementary) Set(key int, val int) {
+func (s *Elementary) Put(key int, val int) {
 	if s.Empty() {
 		s.root = &ElementaryElem{key, val, nil}
 		return
