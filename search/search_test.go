@@ -10,9 +10,7 @@ import (
 
 const factor int = 10
 const minLength int = 1
-const maxLength int = 10
-
-//const maxLength int = 10000
+const maxLength int = 10000
 
 // Store results here to avoid compiler optimizations
 var benchResult int
@@ -29,6 +27,18 @@ func TestBST(t *testing.T) {
 	}
 }
 
+func TestRedBlackBST(t *testing.T) {
+	for i := minLength; i <= maxLength; i *= factor {
+		test(NewRedBlackBST(), i, t)
+	}
+}
+
+func TestGoMap(t *testing.T) {
+	for i := minLength; i <= maxLength; i *= factor {
+		test(NewGoMap(), i, t)
+	}
+}
+
 func test(s Put, l int, t *testing.T) {
 	keys := ds.NewRandomArrayList(l, l)
 	randoms := ds.NewRandomArrayList(l, -1)
@@ -41,10 +51,10 @@ func test(s Put, l int, t *testing.T) {
 		case del:
 			defer delete(mapping, key)
 			val, err = s.Del(key)
-			t.Log("Del", key, val, err)
+			//t.Log("Del", key, val, err)
 		default:
 			val, err = s.Get(key)
-			t.Log("Get", key, val, err)
+			//t.Log("Get", key, val, err)
 		}
 
 		if mVal, ok := mapping[key]; ok {
@@ -72,14 +82,14 @@ func test(s Put, l int, t *testing.T) {
 		testGet(key)
 	}
 
-	t.Log("Put random key-values", l)
+	//t.Log("Put random key-values", l)
 	var prevKey int
 	for _, key := range sort.Shuffle(keys) {
 		testPut(key, randoms[key])
 		testGet(prevKey)
 		prevKey = key
 	}
-	t.Log("Del random key-values", l)
+	//t.Log("Del random key-values", l)
 	for _, key := range sort.Shuffle(keys) {
 		testDel(key)
 		testGet(prevKey)
@@ -87,12 +97,6 @@ func test(s Put, l int, t *testing.T) {
 	}
 	if !s.Empty() {
 		t.Error("Expected set to be empty", l)
-	}
-}
-
-func TestRedBlackBST(t *testing.T) {
-	for i := minLength; i <= maxLength; i *= factor {
-		test(NewRedBlackBST(), i, t)
 	}
 }
 
@@ -112,6 +116,13 @@ func BenchmarkBST(t *testing.B) {
 
 func BenchmarkRedBlackBST(t *testing.B) {
 	s := NewRedBlackBST()
+	for i := minLength; i <= maxLength; i *= factor {
+		benchmark(s, i, t)
+	}
+}
+
+func BenchmarkGoMap(t *testing.B) {
+	s := NewGoMap()
 	for i := minLength; i <= maxLength; i *= factor {
 		benchmark(s, i, t)
 	}
