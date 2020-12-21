@@ -33,6 +33,12 @@ func TestRedBlackBST(t *testing.T) {
 	}
 }
 
+func TestHash(t *testing.T) {
+	for i := minLength; i <= maxLength; i *= factor {
+		test(NewHash(), i, t)
+	}
+}
+
 func TestGoMap(t *testing.T) {
 	for i := minLength; i <= maxLength; i *= factor {
 		test(NewGoMap(), i, t)
@@ -116,6 +122,13 @@ func BenchmarkBST(t *testing.B) {
 
 func BenchmarkRedBlackBST(t *testing.B) {
 	s := NewRedBlackBST()
+	for i := minLength; i <= maxLength; i *= factor {
+		benchmark(s, i, t)
+	}
+}
+
+func BenchmarkHash(t *testing.B) {
+	s := NewHash()
 	for i := minLength; i <= maxLength; i *= factor {
 		benchmark(s, i, t)
 	}
