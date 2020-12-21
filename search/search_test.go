@@ -10,7 +10,9 @@ import (
 
 const factor int = 10
 const minLength int = 1
-const maxLength int = 10000
+const maxLength int = 10
+
+//const maxLength int = 10000
 
 // Store results here to avoid compiler optimizations
 var benchResult int
@@ -39,10 +41,10 @@ func test(s Put, l int, t *testing.T) {
 		case del:
 			defer delete(mapping, key)
 			val, err = s.Del(key)
-			//t.Log("Del", key, val, err)
+			t.Log("Del", key, val, err)
 		default:
 			val, err = s.Get(key)
-			//t.Log("Get", key, val, err)
+			t.Log("Get", key, val, err)
 		}
 
 		if mVal, ok := mapping[key]; ok {
