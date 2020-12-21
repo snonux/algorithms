@@ -26,6 +26,7 @@ func (n *node) String() string {
 
 type BST struct {
 	root *node
+	size int
 }
 
 func NewBST() *BST {
@@ -44,9 +45,14 @@ func (t *BST) Empty() bool {
 	return t.root == nil
 }
 
+func (t *BST) Size() int {
+	return t.size
+}
+
 func (t *BST) Put(key, val int) {
 	if t.Empty() {
 		t.root = &node{key, val, nil, nil}
+		t.size++
 		return
 	}
 	ptr, _, err := t.search(&t.root, key)
@@ -56,6 +62,7 @@ func (t *BST) Put(key, val int) {
 		return
 	case NotFound:
 		*ptr = &node{key, val, nil, nil}
+		t.size++
 		return
 	default:
 		panic(err)
@@ -75,6 +82,7 @@ func (t *BST) Del(key int) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	t.size--
 
 	// Case 1: n is leaf node
 	// Case 2: n has one child
@@ -152,20 +160,3 @@ func (t *BST) min(ptr **node) (**node, *node, error) {
 		n = *ptr
 	}
 }
-
-/*
-func (t *BST) max(ptr **node) (**node, *node, error) {
-	n := *ptr
-	if n == nil {
-		return nil, nil, NotFound
-	}
-
-	for {
-		if n.right == nil {
-			return ptr, n, nil
-		}
-		ptr = &n.right
-		n = *ptr
-	}
-}
-*/

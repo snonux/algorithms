@@ -110,8 +110,8 @@ func (t *RedBlackBST) put(n *rbNode, key, val int) *rbNode {
 	default:
 		if n.deleted {
 			n.deleted = false
+			t.size++
 		}
-		t.size++
 		n.val = val
 	}
 

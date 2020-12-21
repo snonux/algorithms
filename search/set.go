@@ -9,6 +9,7 @@ var (
 
 type Put interface {
 	Empty() bool
+	Size() int
 	Put(key int, val int)
 	Get(key int) (int, error)
 	Del(key int) (int, error)
