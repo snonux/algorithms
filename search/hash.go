@@ -1,88 +1,63 @@
 package search
 
-type HashElem struct {
-	key  int
-	val  int
-	next *HashElem
-}
-
 type Hash struct {
-	root *HashElem
-	size int
+	buckets  []*Elementary
+	capacity int
+	size     int
 }
 
-func NewHash() *Hash {
-	return &Hash{}
+func NewHash(capacity int) *Hash {
+	return &Hash{
+		buckets:  make([]*Elementary, capacity),
+		capacity: capacity,
+	}
 }
 
 func (h *Hash) Empty() bool {
-	return s.root == nil
+	return h.Size() == 0
 }
 
 func (h *Hash) Size() int {
-	return s.size
+	return h.size
+}
+
+func (h *Hash) hash(key int) int {
+	i := key + key*2 + key<<10 + key>>2
+	if i < 0 {
+		i = -i
+	}
+	return i % h.capacity
 }
 
 func (h *Hash) Put(key int, val int) {
-	if s.Empty() {
-		s.root = &HashElem{key, val, nil}
-		s.size++
+	i := h.hash(key)
+
+	if h.buckets[i] == nil {
+		elem := NewElementary()
+		elem.Put(key, val)
+		h.buckets[i] = elem
 		return
 	}
 
-	elem := s.root
-
-	for {
-		if elem.key == key {
-			elem.val = val
-			return
-		}
-		if elem.next == nil {
-			elem.next = &HashElem{key, val, nil}
-			s.size++
-			return
-		}
-		elem = elem.next
-	}
+	h.buckets[i].Put(key, val)
 }
 
 func (h *Hash) Get(key int) (int, error) {
-	elem := s.root
+	i := h.hash(key)
 
-	for elem != nil {
-		if elem.key == key {
-			return elem.val, nil
-		}
-		elem = elem.next
+	if h.buckets[i] == nil {
+		return -1, NotFound
 	}
 
-	return 0, NotFound
+	return h.buckets[i].Get(key)
 }
 
 func (h *Hash) Del(key int) (int, error) {
-	if s.Empty() {
-		return 0, NotFound
+	i := h.hash(key)
+
+	if h.buckets[i] == nil {
+		return -1, NotFound
 	}
 
-	if s.root.key == key {
-		defer func() {
-			s.root = s.root.next
-		}()
-		s.size--
-		return s.root.val, nil
-	}
-
-	elem := s.root
-	for elem.next != nil {
-		if elem.next.key == key {
-			defer func() {
-				elem.next = elem.next.next
-			}()
-			s.size--
-			return elem.next.val, nil
-		}
-		elem = elem.next
-	}
-
-	return 0, NotFound
+	return h.buckets[i].Del(key)
 }
