@@ -35,7 +35,7 @@ func TestRedBlackBST(t *testing.T) {
 
 func TestHash(t *testing.T) {
 	for i := minLength; i <= maxLength; i *= factor {
-		test(NewHash(), i, t)
+		test(NewHash(i*2), i, t)
 	}
 }
 
@@ -128,7 +128,7 @@ func BenchmarkRedBlackBST(t *testing.B) {
 }
 
 func BenchmarkHash(t *testing.B) {
-	s := NewHash()
+	s := NewHash(maxLength * 2)
 	for i := minLength; i <= maxLength; i *= factor {
 		benchmark(s, i, t)
 	}
